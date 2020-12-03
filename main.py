@@ -1,55 +1,80 @@
-class Bird:
-    def __init__(self, title_animal, nickname, voice, weight, eat, bonuses):
-        self.title_animal = title_animal
-        self.nickname = nickname
-        self.voice = voice
-        self.weight = weight
+class Animal:
+    def __init__(self, eat, weight, voice, name):
         self.eat = eat
-        self.bonuses = bonuses
+        self.weight = weight
+        self.voice = voice
+        self.name = name
 
     def eating(self, kg):
         return self.eat * kg
+
+
+class MakeEgg(Animal):
+    egg = 1
+
+    def collect_eggs(self, quantity):
+        return quantity
+
+
+class Milk(Animal):
+    milk = 0
+
+    def milking(self, liter):
+        return self.milk * liter
+
+
+class Geese(MakeEgg, Animal):
+    voice = 'Quack'
+
+
+class Cow(Milk, Animal):
+    voice = 'Muu'
+    milk = 15
+    def __str__(self):
+        return f'{self.weight}'
+
+
+class Sheep(Animal):
+    voice = 'Bee'
+    wool = 15
+
+    def hair_shearing(self, quantity):
+        return self.wool * quantity
+
+
+class Chicken(MakeEgg, Animal):
+    voice = 'Co-co'
 
     def collecting_eggs(self, quantity):
         return quantity
 
+class Goat(Milk, Animal):
+    voice = 'Mee'
+    milk = 10
 
-grey = Bird('Гусь', 'Серый', 'Кря', 5, 2, 'Яйца')
-white = Bird('Гусь', 'Белый', 'Кря', 7, 2, 'Яйца')
-coco = Bird('Курица', 'Ко-ко', 'Кудах', 3, 2, 'Яйца')
-cucareca = Bird('Курица', 'Кукареку', 'Кудах', 4, 2, 'Яйца')
-cryakva = Bird('Утка', 'Кряква', 'Кря', 5, 2, 'Яйца')
+class Duck(MakeEgg, Animal):
+    voice = 'Quack'
 
+grey = Geese(1, 2, 'Кря', 'Серый')
+white = Geese(1, 2, 'Кря', 'Белый')
 
-class Ungulates:
-    def __init__(self, title_animal, nickname, voice, weight, eat, bonuses):
-        self.title_animal = title_animal
-        self.nickname = nickname
-        self.voice = voice
-        self.weight = weight
-        self.eat = eat
-        self.bonuses = bonuses
+manka = Cow(10, 90, 'Мууу', 'Манька')
 
-    def eating(self, kg):
-        return self.eat * kg
+barashek = Sheep(7, 55, 'Бее', 'Барашек')
+kudryavy = Sheep(6, 61, 'Бее', 'Кудрявый')
 
-    def collecting_milk(self, liter):
-        return liter
+coco = Chicken(2, 1, 'Кудах', 'Ко-Ко')
+cucareca = Chicken(2, 1, 'Кудах', 'Кукареку')
 
-    def collecting_wool(self, kg):
-        return kg
+roga = Goat(3, 80, 'Мее', 'Рога')
+kopyta = Goat(3, 90, 'Мее', 'Копыта')
 
+cryakva = Duck(2, 3, 'Кря', 'Кряква')
 
-manka = Ungulates('Корова', 'Манька', 'Му', 80, 3, 'Молоко')
-barashek = Ungulates('Овца', 'Барашек', 'Бе', 50, 3, 'Шерсть')
-kudryavy = Ungulates('Овца', 'Кудрявый', 'Бе', 55, 3, 'Шерсть')
-roga = Ungulates('Коза', 'Рога', 'Ме', 30, 3, 'Молоко')
-kopyta = Ungulates('Коза', 'Копыта', 'Ме', 40, 3, 'Молоко')
-
-dict_a = {grey.nickname: grey.weight, white.nickname: white.weight, coco.nickname: coco.weight,
-          cucareca.nickname: cucareca.weight, cryakva.nickname: cryakva.weight, manka.nickname: manka.weight,
-          barashek.nickname: barashek.weight, kudryavy.nickname: kudryavy.weight, roga.nickname: roga.weight,
-          kopyta.nickname: kopyta.weight}
+dict_a = {grey: grey.weight, white: white.weight, coco: coco.weight,
+          cucareca: cucareca.weight, cryakva: cryakva.weight, manka: manka.weight,
+          barashek: barashek.weight, kudryavy: kudryavy.weight, roga: roga.weight,
+          kopyta: kopyta.weight}
 
 count = 0
 for weight_a in dict_a.values():
@@ -63,7 +88,8 @@ for i, y in dict_a.items():
         max_count = y
         animal_max = i
 
+
 print(f'Самое тяжелое животное: {animal_max}')
-print(f'Молока сегодня {manka.collecting_milk(3)} литра')
-print(f'Кряква съела {cryakva.eating(0.5)} кг зерна')
-print(f'Ко-ко снесла {coco.collecting_eggs(2)}')
+print(f'Молока сегодня {manka.milking(3)} литра')
+print(f'{cryakva.name} съела {cryakva.eating(0.5)} кг зерна')
+print(f'{coco.name} снесла {coco.collecting_eggs(2)} яйца')
